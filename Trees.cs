@@ -43,6 +43,24 @@ namespace TreesExample
             InOrderRec(Root);
         }
 
+        public void PreOrderRec(TreeNode root)
+        {
+            if (root != null)
+            {
+                // Visit the node
+                Console.Write(root.Value + " ");
+                // Traverse the left subtree
+                PreOrderRec(root.Left);
+                // Traverse the right subtree
+                PreOrderRec(root.Right);
+            }
+        }
+
+        public void PreOrderTraversal()
+        {
+            PreOrderRec(Root);
+        }
+
         public static void Main(string[] args)
         {
             BinaryTree tree = new BinaryTree();
@@ -55,6 +73,8 @@ namespace TreesExample
 
             Console.WriteLine("In-order traversal of the binary tree:");
             tree.InOrderTraversal(); // Output: 4 2 5 1 3
+            Console.WriteLine("\nPre-order traversal of the binary tree:");
+            tree.PreOrderTraversal(); // Output: 1 2 4 5 3
         }
     }
 }
