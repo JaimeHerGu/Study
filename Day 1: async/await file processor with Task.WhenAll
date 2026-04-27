@@ -1,0 +1,49 @@
+await RunAsync();
+
+/// <summary>
+/// Reads a file asynchronously and returns its content.
+/// Returns empty string if file is not found.
+/// </summary>
+/// <param name="path">The file path to read.</param>
+/// <returns>File content or empty string.</returns>
+
+
+async Task<string> ReadFileAsync(string path)
+{
+    try
+    {
+        return await File.ReadAllTextAsync(path);
+    }
+    catch (FileNotFoundException ex)
+    {
+        Console.WriteLine($"Error reading file: {ex.Message}");
+        return string.Empty;
+    }
+}
+
+/// <summary>
+/// Runs the main logic of the program, reading multiple files and printing their content lengths.
+/// </summary>
+/// <returns>A task representing the asynchronous operation.</returns>
+async Task RunAsync()
+{
+    var files = new[] { "file1.txt", "file2.txt", "file3.txt", "file4.txt" };
+    var results = await Task.WhenAll(files.Select(ReadFileAsync));    
+    await PrintResultsAsync(results);
+}
+
+/// <summary>
+/// Prints the results of file reading asynchronously.
+/// </summary>
+/// <param name="results">Array of file contents.</param>
+/// <returns>A task representing the asynchronous operation.</returns>
+async Task PrintResultsAsync(string[] results)
+{
+    await Task.Run(() =>
+    {
+        foreach (var result in results)
+        {
+            Console.WriteLine($"File content length: {result.Length} characters");
+        }
+    });
+}
